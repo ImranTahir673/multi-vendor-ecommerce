@@ -4,7 +4,7 @@ import { getAllOrdersOfAdmin } from "../../redux/actions/order";
 
 const AllOrders = () => {
   const dispatch = useDispatch();
-  const { adminOrders, adminOrderLoading } = useSelector(
+  const { adminOrders } = useSelector(
     (state) => state.order
   );
 

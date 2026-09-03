@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "../../styles/styles";
-import { AiOutlineArrowRight, AiOutlineMoneyCollect } from "react-icons/ai";
+import { AiOutlineMoneyCollect } from "react-icons/ai";
 import { MdBorderClear } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +10,7 @@ import { getAllSellers } from "../../redux/actions/sellers";
 const AdminDashboardMain = () => {
   const dispatch = useDispatch();
 
-  const { adminOrders, adminOrderLoading } = useSelector(
-    (state) => state.order
-  );
+  const { adminOrders } = useSelector((state) => state.order);
   const { sellers } = useSelector((state) => state.seller);
 
   useEffect(() => {

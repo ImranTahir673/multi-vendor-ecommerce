@@ -6,7 +6,7 @@ import { deleteEvent, getAllEventsShop } from "../../redux/actions/event";
 import { toast } from "react-toastify";
 
 const AllEvents = () => {
-  const { events, isLoading } = useSelector((state) => state.events);
+  const { events } = useSelector((state) => state.events);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();

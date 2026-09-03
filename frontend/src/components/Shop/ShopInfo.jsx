@@ -9,21 +9,17 @@ import { getAllProductsShop } from "../../redux/actions/product";
 const ShopInfo = ({ isOwner }) => {
   const [data, setData] = useState({});
   const { products } = useSelector((state) => state.products);
-  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllProductsShop(id));
-    setIsLoading(true);
     axios
       .get(`${server}/shop/get-shop-info/${id}`)
       .then((res) => {
         setData(res.data.shop);
-        setIsLoading(false);
       })
       .catch((error) => {
-        setIsLoading(false);
       });
   }, [dispatch, id]);
 

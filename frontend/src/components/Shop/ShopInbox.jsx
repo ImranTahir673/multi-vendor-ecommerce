@@ -4,7 +4,6 @@ import socketIO from "socket.io-client";
 import { format } from "timeago.js";
 import { server } from "../../server";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { AiOutlineSend } from "react-icons/ai";
 import { TfiGallery } from "react-icons/tfi";
 import styles from "../../styles/styles";
@@ -18,8 +17,6 @@ const ShopInbox = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([]);
-  const [open, setOpen] = useState(false);
   const socketRef = useRef();
   const scrollRef = useRef();
 
@@ -43,9 +40,6 @@ const ShopInbox = () => {
   useEffect(() => {
     if (seller?._id) {
       socketRef.current.emit("addUser", seller._id);
-      socketRef.current.on("getUsers", (data) => {
-        setOnlineUsers(data);
-      });
     }
   }, [seller]);
 
@@ -240,7 +234,6 @@ const ShopInbox = () => {
             </div>
 
             <form
-              aria-required={true}
               onSubmit={sendMessageHandler}
               className="p-3 relative w-full flex justify-between items-center border-t"
             >

@@ -6,7 +6,7 @@ import { getAllProductsShop, deleteProduct } from "../../redux/actions/product";
 import { toast } from "react-toastify";
 
 const AllProducts = () => {
-  const { products, isLoading } = useSelector((state) => state.products);
+  const { products } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();

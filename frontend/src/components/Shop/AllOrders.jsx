@@ -5,7 +5,7 @@ import { getAllOrdersOfShop } from "../../redux/actions/order";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 const AllOrders = () => {
-  const { orders, isLoading } = useSelector((state) => state.order);
+  const { orders } = useSelector((state) => state.order);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();

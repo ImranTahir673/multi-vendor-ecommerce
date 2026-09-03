@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 const AllCoupons = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [coupons, setCoupons] = useState([]);
   const [minAmount, setMinAmount] = useState(null);
   const [maxAmount, setMaxAmount] = useState(null);
@@ -20,17 +19,14 @@ const AllCoupons = () => {
   const { products } = useSelector((state) => state.products);
 
   useEffect(() => {
-    setIsLoading(true);
     axios
       .get(`${server}/coupon/get-coupon/${seller._id}`, {
         withCredentials: true,
       })
       .then((res) => {
-        setIsLoading(false);
         setCoupons(res.data.couponCodes);
       })
       .catch((error) => {
-        setIsLoading(false);
       });
   }, [seller]);
 

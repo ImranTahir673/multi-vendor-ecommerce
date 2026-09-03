@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../../styles/styles";
-import { Country, State, City } from "country-state-city";
+import { Country } from "country-state-city";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";

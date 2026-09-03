@@ -17,7 +17,7 @@ import {
 import { toast } from "react-toastify";
 import axios from "axios";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
-import { Country, State, City } from "country-state-city";
+import { Country } from "country-state-city";
 import { RxCross1 } from "react-icons/rx";
 
 const ProfileContent = ({ active }) => {
@@ -26,7 +26,6 @@ const ProfileContent = ({ active }) => {
   const [email, setEmail] = useState(user && user.email);
   const [phoneNumber, setPhoneNumber] = useState(user && user.phoneNumber);
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -100,7 +99,7 @@ const ProfileContent = ({ active }) => {
           <br />
           <br />
           <div className="w-full px-5">
-            <form onSubmit={handleSubmit} aria-required={true}>
+            <form onSubmit={handleSubmit}>
               <div className="w-full 800px:flex block pb-3">
                 <div className="w-[100%] 800px:w-[50%]">
                   <label className="block pb-2 font-medium text-sm">Full Name</label>
@@ -400,7 +399,6 @@ const ChangePassword = () => {
       </h1>
       <div className="w-full">
         <form
-          aria-required
           onSubmit={passwordChangeHandler}
           className="flex flex-col items-center"
         >
@@ -509,7 +507,7 @@ const Address = () => {
               Add New Address
             </h1>
             <div className="w-full">
-              <form aria-required onSubmit={handleSubmit} className="w-full p-4">
+              <form onSubmit={handleSubmit} className="w-full p-4">
                 <div className="w-full block p-2">
                   <label className="block pb-2 text-sm font-medium">Country</label>
                   <select
