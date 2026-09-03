@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>Comprehensive Case Study: Multi-Vendor MERN E-Commerce Architecture</title>
+<style>
+  body {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #333333;
+    margin: 40px;
+  }
+  h1 {
+    font-size: 22pt;
+    color: #1a365d;
+    border-bottom: 2px solid #2b6cb0;
+    padding-bottom: 6px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: 15pt;
+    color: #2b6cb0;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 12pt;
+    color: #2d3748;
+    margin-top: 14px;
+    margin-bottom: 6px;
+  }
+  .header-box {
+    background-color: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #3182ce;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 4px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    margin-bottom: 18px;
+    font-size: 10pt;
+  }
+  th {
+    background-color: #edf2f7;
+    color: #2d3748;
+    font-weight: bold;
+    text-align: left;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e0;
+  }
+  td {
+    padding: 8px 10px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+  tr:nth-child(even) {
+    background-color: #f7fafc;
+  }
+  .code-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 10px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9.5pt;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 9pt;
+    font-weight: bold;
+  }
+  .badge-success { background-color: #c6f6d5; color: #22543d; }
+  .badge-info { background-color: #bee3f8; color: #2a4365; }
+  ul {
+    margin-top: 6px;
+    margin-bottom: 12px;
+    padding-left: 25px;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header-box">
+  <h1 style="margin-top: 0; border-bottom: none; font-size: 24pt;">Comprehensive Case Study: Multi-Vendor MERN E-Commerce Architecture</h1>
+  <p><strong>Fellowship Task Submission:</strong> DevWeekends Web Development Fellowship</p>
+  <p><strong>Project:</strong> Flagship Multi-Vendor E-Commerce Platform (Becodemy 4-Part Series)</p>
+  <p><strong>Author:</strong> Imran Tahir</p>
+  <p><strong>Stack:</strong> React 18, Redux Toolkit, Node.js 24, Express 4.19, MongoDB (Mongoose 8.3), Socket.io, Stripe, Tailwind CSS</p>
+  <p><strong>GitHub Repository:</strong> <a href="https://github.com/ImranTahir673/multi-vendor-ecommerce">https://github.com/ImranTahir673/multi-vendor-ecommerce</a></p>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p>This case study documents the design, architecture, implementation, and engineering modernizations executed for the <strong>Multi-Vendor MERN E-Commerce Platform</strong>. The system provides a decentralized, marketplace model supporting three distinct operational roles:</p>
+<ul>
+  <li><strong>Buyers / Customers:</strong> Browse full product catalog, search with real-time autocompletion, filter by categories, maintain personal wishlists and cart, apply vendor-issued discount coupons, complete secure checkout via Stripe Elements or Cash on Delivery (COD), inspect live visual delivery tracking pipelines, rate and review fulfilled items, and chat directly in real-time with store owners.</li>
+  <li><strong>Independent Vendors / Sellers:</strong> Register custom storefronts, manage multi-image product listings with tags and pricing tiers, host time-delimited promotional flash sales with real-time countdown clocks, issue custom percentage coupon vouchers with minimum/maximum purchase amounts, advance order statuses step-by-step ("Processing" &rarr; "Delivered"), inspect net account balances (with automatic 10% platform fee deducted), and request payout withdrawals to connected bank accounts.</li>
+  <li><strong>Platform Administrators:</strong> Audit system-wide transactions, track cumulative 10% marketplace commission earnings, moderate registered customer accounts, inspect and revoke seller stores, and review and approve vendor withdrawal requests.</li>
+</ul>
+
+<h2>2. Distributed System Architecture</h2>
+<p>The application is built on a decoupled, microservice-ready architecture designed for low-latency client interaction and independent service scalability:</p>
+<ul>
+  <li><strong>Frontend Storefront (<code>/frontend</code>):</strong> Single Page Application built on React 18 and React Router DOM 6. State management is structured into discrete Redux Toolkit slices (<code>user</code>, <code>seller</code>, <code>products</code>, <code>events</code>, <code>cart</code>, <code>wishlist</code>, <code>order</code>). Responsive UI designed with Tailwind CSS utility classes.</li>
+  <li><strong>Backend REST API (<code>/backend</code>):</strong> Express 4.19 and Node.js. Enforces dual cookie-based JWT authorization, multi-vendor order partitioning, transaction auditing, and asset pipeline management.</li>
+  <li><strong>Real-Time Duplex Microservice (<code>/socket</code>):</strong> Standalone Socket.io 4.7 service running on port 4000 managing persistent WebSocket connections for buyer-to-seller messaging.</li>
+  <li><strong>Cloud Infrastructure:</strong> MongoDB Atlas (document persistence via Mongoose 8.3), Stripe API (Level-1 PCI-compliant payment gateway), Cloudinary (optimized cloud media hosting), and Nodemailer (transactional notifications).</li>
+</ul>
+
+<h2>3. Database Schema & Data Models</h2>
+<p>The system defines 9 interdependent Mongoose schemas:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Primary Purpose</th>
+      <th>Key Fields</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>User</strong></td>
+      <td>Customer identity & authentication</td>
+      <td><code>name</code>, <code>email</code>, <code>password</code> (bcrypt hash), <code>phoneNumber</code>, <code>addresses[]</code>, <code>role</code> ("user", "Admin"), <code>avatar</code></td>
+    </tr>
+    <tr>
+      <td><strong>Shop</strong></td>
+      <td>Independent vendor storefront</td>
+      <td><code>name</code>, <code>email</code>, <code>password</code>, <code>description</code>, <code>address</code>, <code>phoneNumber</code>, <code>role</code> ("Seller"), <code>avatar</code>, <code>withdrawMethod</code>, <code>availableBalance</code></td>
+    </tr>
+    <tr>
+      <td><strong>Product</strong></td>
+      <td>Marketplace inventory catalog</td>
+      <td><code>name</code>, <code>description</code>, <code>category</code>, <code>tags</code>, <code>originalPrice</code>, <code>discountPrice</code>, <code>stock</code>, <code>images[]</code>, <code>reviews[]</code>, <code>ratings</code>, <code>shopId</code></td>
+    </tr>
+    <tr>
+      <td><strong>Event</strong></td>
+      <td>Promotional flash sale campaign</td>
+      <td>Same as product plus <code>start_Date</code>, <code>Finish_Date</code>, <code>status</code> ("Running")</td>
+    </tr>
+    <tr>
+      <td><strong>CoupounCode</strong></td>
+      <td>Shop-specific discount voucher</td>
+      <td><code>name</code>, <code>value</code> (percentage), <code>minAmount</code>, <code>maxAmount</code>, <code>shopId</code>, <code>selectedProduct</code></td>
+    </tr>
+    <tr>
+      <td><strong>Order</strong></td>
+      <td>Vendor-specific order record</td>
+      <td><code>cart[]</code>, <code>shippingAddress</code>, <code>user</code>, <code>totalPrice</code>, <code>status</code>, <code>paymentInfo</code>, <code>paidAt</code>, <code>deliveredAt</code></td>
+    </tr>
+    <tr>
+      <td><strong>Conversation</strong></td>
+      <td>Chat thread metadata</td>
+      <td><code>groupTitle</code> (productId + userId), <code>members[]</code> (userId, sellerId), <code>lastMessage</code></td>
+    </tr>
+    <tr>
+      <td><strong>Messages</strong></td>
+      <td>Discrete chat communication</td>
+      <td><code>conversationId</code>, <code>text</code>, <code>sender</code>, <code>images</code></td>
+    </tr>
+    <tr>
+      <td><strong>Withdraw</strong></td>
+      <td>Vendor fund payout request</td>
+      <td><code>seller</code>, <code>amount</code>, <code>status</code> ("Processing", "Succeed"), timestamps</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>4. Multi-Vendor Order Splitting Engine</h2>
+<p>When a buyer places an order containing items from multiple distinct sellers, the order creation engine automatically groups and partitions the cart items by vendor <code>shopId</code> into discrete <code>Order</code> documents:</p>
+<div class="code-box">
+// Partition cart items by vendor shopId<br>
+const shopItemsMap = new Map();<br>
+for (const item of cart) {<br>
+&nbsp;&nbsp;const shopId = item.shopId;<br>
+&nbsp;&nbsp;if (!shopItemsMap.has(shopId)) shopItemsMap.set(shopId, []);<br>
+&nbsp;&nbsp;shopItemsMap.get(shopId).push(item);<br>
+}<br>
+<br>
+// Generate discrete orders per shop<br>
+for (const [shopId, items] of shopItemsMap) {<br>
+&nbsp;&nbsp;await Order.create({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cart: items,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shippingAddress,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;totalPrice: items.reduce((acc, i) =&gt; acc + i.discountPrice * i.qty, 0),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;paymentInfo,<br>
+&nbsp;&nbsp;});<br>
+}
+</div>
+<p>This guarantees that each vendor only sees and fulfills their respective items, shipment tracking progresses independently, and ratings attach directly to the product and store.</p>
+
+<h2>5. Platform Commission & Automatic Seller Settlement</h2>
+<p>When an order is transitioned to <strong>"Delivered"</strong> by a vendor:</p>
+<ol>
+  <li>The backend verifies that the order is not already marked delivered to prevent duplicate crediting.</li>
+  <li>Inventory <code>stock</code> is decremented in MongoDB by the ordered quantity, and <code>sold_out</code> is incremented.</li>
+  <li>The platform retains a 10% marketplace commission: <code>Platform Fee = Total &times; 0.10</code>.</li>
+  <li>The remaining 90% is atomically credited to the vendor's <code>availableBalance</code> via <code>$inc</code> for payout withdrawal.</li>
+</ol>
+
+<h2>6. Dual JWT Cookie Security Architecture</h2>
+<p>To support users who operate simultaneously as buyers and sellers in the same browser session without session pollution, the platform implements dual cookie authentication:</p>
+<ul>
+  <li><code>token</code>: Encodes buyer user identity; verified via <code>isAuthenticated</code> middleware.</li>
+  <li><code>seller_token</code>: Encodes vendor shop identity; verified via <code>isSeller</code> middleware.</li>
+  <li>Both cookies are configured with <code>httpOnly: true</code>, <code>sameSite: "none"</code>, and <code>secure: true</code> to enable cross-domain security between Vercel and Render.</li>
+  <li>Administrative routes are guarded by <code>isAdmin</code> middleware verifying <code>req.user.role === "Admin"</code>.</li>
+</ul>
+
+<h2>7. Engineering Modernizations & Bug Fixes</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Area</th>
+      <th>Legacy Tutorial Code</th>
+      <th>Modernized Implementation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Mongoose 8 Deletion</strong></td>
+      <td><code>product.remove()</code>, <code>event.remove()</code> (Removed in Mongoose 8)</td>
+      <td>Replaced with modern <code>findByIdAndDelete(id)</code> across all controllers.</td>
+    </tr>
+    <tr>
+      <td><strong>Event Controller Typo</strong></td>
+      <td>Queried <code>product</code> instead of <code>event</code> in delete route</td>
+      <td>Fixed model reference to prevent null pointer exceptions when deleting events.</td>
+    </tr>
+    <tr>
+      <td><strong>Cloudinary Resilience</strong></td>
+      <td>Crashed if credentials unconfigured</td>
+      <td>Wrapped in try/catch fallbacks with default avatar URLs.</td>
+    </tr>
+    <tr>
+      <td><strong>React 18 & State</strong></td>
+      <td>React 17 + Legacy Redux string boilerplate</td>
+      <td>React 18 + Redux Toolkit (<code>configureStore</code>, <code>createReducer</code>) and hooks.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>8. Fellowship Submission Checklist</h2>
+<ul>
+  <li><span class="badge badge-success">&#10004; Complete</span> Multi-vendor marketplace architecture completed.</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> Multi-vendor order splitting per shopId verified.</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> Product & promotional event catalog with live countdown clocks.</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> Shop coupon code discount engine with cart threshold logic.</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> Real-time duplex buyer-to-seller chat via Socket.io.</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> Cash on Delivery (COD) and Stripe card payment workflows.</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> Multi-role authentication (Buyer, Seller, Admin).</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> Backend successfully deployed and live on Render.</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> Frontend client production bundle compiled and ready on Vercel.</li>
+  <li><span class="badge badge-success">&#10004; Complete</span> GitHub repository synchronized and case study completed.</li>
+</ul>
+
+</body>
+</html>
