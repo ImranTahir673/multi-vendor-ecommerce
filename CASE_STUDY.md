@@ -4,7 +4,7 @@
 **Project:** Flagship Multi-Vendor E-Commerce Platform (Becodemy Series)  
 **Author:** Imran Tahir  
 **Stack:** React 18, Redux Toolkit, Node.js 24, Express 4.19, MongoDB (Mongoose 8.3), Socket.io, Stripe, Tailwind CSS  
-**Repository:** [GitHub Repository](https://github.com/ImranTahir673/mern-real-estate-marketplace) *(new separate repo for submission)*  
+**Repository:** [GitHub Repository](https://github.com/ImranTahir673/multi-vendor-ecommerce)  
 
 ---
 
