@@ -26,6 +26,7 @@ const ProfileContent = ({ active }) => {
   const [email, setEmail] = useState(user && user.email);
   const [phoneNumber, setPhoneNumber] = useState(user && user.phoneNumber);
   const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -79,7 +80,7 @@ const ProfileContent = ({ active }) => {
           <div className="flex justify-center w-full">
             <div className="relative">
               <img
-                src={`${user?.avatar?.url}`}
+                src={avatar || `${user?.avatar?.url}`}
                 className="w-[150px] h-[150px] rounded-full object-cover border-[5px] border-[#3853db]"
                 alt=""
               />

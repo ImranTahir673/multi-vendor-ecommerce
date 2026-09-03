@@ -192,7 +192,6 @@ const UserInbox = () => {
                 data={item}
                 key={index}
                 index={index}
-                setOpen={setOpen}
                 setCurrentChat={setCurrentChat}
                 me={user?._id}
                 currentChat={currentChat}
