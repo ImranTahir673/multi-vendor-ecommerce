@@ -43,6 +43,10 @@ const Categories = () => {
                   <h5 className={`text-[17px] leading-[1.3] font-medium`}>{i.title}</h5>
                   <img
                     src={i.image_Url}
+                    onError={(e) => {
+                      e.target.src =
+                        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&auto=format&fit=crop&q=80";
+                    }}
                     className="w-[70px] h-[70px] object-contain ml-2"
                     alt=""
                   />

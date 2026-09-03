@@ -124,6 +124,10 @@ const ProductDetails = ({ data }) => {
                 <img
                   src={`${data && data.images && data.images[select]?.url}`}
                   alt=""
+                  onError={(e) => {
+                    e.target.src =
+                      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=80";
+                  }}
                   className="w-[80%] max-h-[400px] object-contain mx-auto rounded"
                 />
                 <div className="w-full flex mt-4 justify-center gap-2">
@@ -140,6 +144,10 @@ const ProductDetails = ({ data }) => {
                         <img
                           src={`${i?.url}`}
                           alt=""
+                          onError={(e) => {
+                            e.target.src =
+                              "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100&auto=format&fit=crop&q=80";
+                          }}
                           className="h-[60px] w-[60px] object-cover rounded"
                         />
                       </div>

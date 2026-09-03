@@ -35,6 +35,10 @@ const EventCard = ({ active, data }) => {
         <img
           src={`${data?.images && data?.images[0]?.url}`}
           alt=""
+          onError={(e) => {
+            e.target.src =
+              "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=80";
+          }}
           className="max-h-[300px] object-contain rounded"
         />
       </div>

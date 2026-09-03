@@ -71,6 +71,10 @@ const ProductCard = ({ data, isEvent }) => {
           <img
             src={`${data.images && data.images[0]?.url}`}
             alt=""
+            onError={(e) => {
+              e.target.src =
+                "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=80";
+            }}
             className="w-full h-[170px] object-contain rounded"
           />
         </Link>
